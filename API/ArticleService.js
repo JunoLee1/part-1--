@@ -13,6 +13,7 @@ export async function getArticleList(page = 1, pageSize = 10, keyword = "") {// 
     })
     .catch(err => {
         console.error("GET 기사 실패", err)
+        return [];
     })
 }
 

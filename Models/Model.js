@@ -4,8 +4,8 @@ export class Product{
     constructor(name, price, tags, images, favoriteCount){
         this.name = name, 
         this.price = price, 
-        this.tags = [tags], // tag 배열
-        this.images = [images], // 이미지 배열
+        this.tags = tags, // tag 배열
+        this.images = images, // 이미지 배열
         this.favoriteCount = favoriteCount
     }
     favorite(){
@@ -22,4 +22,3 @@ export class ElectronicProduct extends Product{
         this.manufacturer = manufacturer
     }
 }
-

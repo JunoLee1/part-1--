@@ -1,7 +1,7 @@
 
 
 export async function getProductList(page= 1, pageSize = 10, keyword = "") {
-    const url = new URL(`https://panda-market-api-crud.vercel.app/product/`);
+    const url = new URL(`https://panda-market-api-crud.vercel.app/products/`);
     try{// - `page`, `pageSize`, `keyword` 쿼리 파라미터를 이용한 get method
         url.searchParams.set("page", page);
         url.searchParams.set("pageSize",pageSize);
@@ -17,9 +17,10 @@ export async function getProductList(page= 1, pageSize = 10, keyword = "") {
         const data = await res.json();
 
         console.log("제품리스트 가져오기 성공", data);
-        return data 
+        return data
     }catch(err){
         console.error("제품정보 가져오기 실패", err);
+        return []
     }
    
     
@@ -27,7 +28,7 @@ export async function getProductList(page= 1, pageSize = 10, keyword = "") {
 
 
 export async function getProduct() {
-    const url = new URL (`https://panda-market-api-crud.vercel.app/product/`)
+    const url = new URL (`https://panda-market-api-crud.vercel.app/products/`)
     try{
         
         const res = await fetch(url)
@@ -42,6 +43,7 @@ export async function getProduct() {
         return data 
     }catch(err){
         console.error("제품 정보 가져오기 실패",err)
+        return [];
     }
 }
 
