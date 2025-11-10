@@ -3,7 +3,7 @@ import type { ProductQueryDTO, productDTO } from "../dto/product.dto.js";
 import { PrismaClient } from "@prisma/client";
 import { Helper } from "../helper/helper.js";
 import { NotificationService } from "./notification.service.js";
-import type { WebsocketService } from "socket/socket.js";
+import type { WebsocketService } from "../socket/socket.js";
 
 const helper = new Helper();
 
