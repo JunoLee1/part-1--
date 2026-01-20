@@ -78,7 +78,7 @@ if nums[pivot] < nums[idx]
 
   
   time complexity  => o(n ** 2)
- space complexity => o(1) || O(n) => recursive
+  space complexity => o(1) || O(n) => recursive
 
 */
 function insertSort(nums) {
