@@ -69,4 +69,17 @@ class DoublyLinkedList {
     }
     return ;
   }
+  delete(value: string){
+    if(this.head === null) return ;
+    let target: DoublyListNode | null= this.head;
+    while(target.next && target.prev){
+        if(target.next.val === value){
+            target.prev.next = target.next
+            target.next.next = target.prev
+        }else{ 
+            target = target.next
+        }
+        return target
+    }
+  }
 }
