@@ -43,6 +43,7 @@ class SinglyLinkedListTs {
       newNode.next = this.head;
       this.head = newNode;
       if (!this.tail) this.tail = newNode;
+      return;
     }
     while (prev && currentIdx < idx - 1) {
       prev = prev.next;
@@ -53,5 +54,36 @@ class SinglyLinkedListTs {
     newNode.next = prev.next;
     prev.next = newNode;
   }
-  deleteAtIdx(value: string, idx: number) {}
+  deleteAtIdx(idx: number) {
+    if (this.head === null) return;
+    let prev: ListNode | null = this.head;
+    let prevIdx = 0;
+    if (idx === 0) {
+      this.head = this.head.next;
+      return;
+    }
+    while (prev && prevIdx < idx - 1) {
+      prev = prev.next;
+      prevIdx++;
+    }
+    if (prev && prev.next) {
+      prev.next = prev.next.next;
+    }
+  }
+  delete(targetValue: string) {
+    if (!this.head) return;
+    let prev: ListNode | null = this.head;
+    if (this.head.val === targetValue) {
+      this.head = this.head.next;
+      return;
+    }
+    while (prev.next) {
+      if (prev.next.val === targetValue) {
+        prev.next = prev.next.next;
+        return;
+      } else {
+        prev = prev.next;
+      }
+    }
+  }
 }
