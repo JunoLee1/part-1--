@@ -58,6 +58,9 @@ console.log(mergeSort([7, 3, 1, 2, 8, 6, 4, 9, 5]));
     ↓ : idx
     ⇣ : pivot
 
+ time complexity  => o(n ** 2)
+ space complexity => o(1) || O(n) => recursive
+
 
   ↓  ⇣
  [8, 4, 7]
@@ -75,27 +78,22 @@ if nums[pivot] < nums[idx]
   => [2, 8, 8]
 
   => [4, 7, 8] insert temp
-
-  
-  time complexity  => o(n ** 2)
-  space complexity => o(1) || O(n) => recursive
-
 */
-function insertSort(nums) {
-  const n = nums.length;
-  for (let pIdx = 1; pIdx < n; pIdx++) {
-    let temp = nums[pIdx];
-    let idx = pIdx - 1;
-    while (idx >= 0 && temp < nums[idx]) {
-      nums[idx + 1] = nums[idx];
-      idx--;
+function insertSort(nums){
+    const n = nums.length
+    for(let pIdx = 1;  pIdx < n; pIdx++){
+        let temp = nums[pIdx]
+        let idx = pIdx - 1
+        while(idx >= 0 && temp < nums[idx]){
+            nums[idx + 1] = nums[idx]
+            idx--
+        }
+        nums[idx + 1] = temp
     }
-    nums[idx + 1] = temp;
-  }
-  return nums;
+    return nums
 }
 
-console.log(insertSort([7, 3, 1, 2, 8, 6, 4, 9, 5]));
+console.log(insertSort([7, 3, 1, 2, 8, 6, 4, 9, 5]))
 
 // select sort
 
@@ -118,22 +116,24 @@ console.log(insertSort([7, 3, 1, 2, 8, 6, 4, 9, 5]));
 => O(n)
 
 */
-function selectSort(nums) {
-  n = nums.length;
-  for (let i = 0; i < n; i++) {
-    minNum = nums[i];
-    minIdx = i;
-    for (let j = i; j < n; j++) {
-      if (nums[j] < minNum) {
-        minNum = nums[j];
-        minIdx = j;
-      }
+function selectSort(nums){
+   
+    n = nums.length
+    for(let i = 0; i < n; i++){
+        minNum = nums[i]
+        minIdx = i
+        for(let j = i ; j < n; j++){
+            if(nums[j] < minNum){
+                minNum = nums[j]
+                minIdx = j
+            }
+        }
+        [nums[i],nums[minIdx]] = [nums[minIdx],nums[i]]
     }
-    [nums[i], nums[minIdx]] = [nums[minIdx], nums[i]];
-  }
-  return nums;
+    return nums
 }
-console.log(selectSort([7, 3, 1, 2, 8, 6, 4, 9, 5]));
+console.log(selectSort([7, 3, 1, 2, 8, 6, 4, 9, 5]))
+
 
 // quick Sort
 /*
@@ -199,29 +199,27 @@ fastest time complexity : n log n
 
 space complexity: o(n)
 */
-function quickSort(nums = []) {
-  let n = nums.length;
-  let mid = Math.floor(n / 2);
+function quickSort(nums=[]){
+    let n = nums.length
+    let mid = Math.floor(n / 2)
 
-  let pivot = nums[mid];
-  let leftNums = [];
-  let rightNums = [];
-
-  leftIdx = 0;
-  rightIdx = 0;
-  if (nums.length <= 1) {
-    return nums;
-  }
-  for (let i = 0; i < n; i++) {
-    if (i === mid) continue;
-    if (nums[i] < pivot) {
-      leftNums.push(nums[i]);
-    } else {
-      rightNums.push(nums[i]);
+    let pivot = nums[mid]
+    let leftNums = []
+    let rightNums = []
+    
+    leftIdx = 0
+    rightIdx = 0
+    if(nums.length <= 1 ) {return nums};
+    for(let i = 0; i < n; i++){
+        if (i === mid) continue;
+        if(nums[i] < pivot){
+            leftNums.push(nums[i])
+        }else{
+            rightNums.push(nums[i])
+        }
     }
-  }
-  const l_sorted = quickSort(leftNums);
-  const r_sorted = quickSort(rightNums);
-  return [...l_sorted, pivot, ...r_sorted];
+    const l_sorted = quickSort(leftNums)
+    const r_sorted = quickSort(rightNums)
+    return [...l_sorted, pivot, ...r_sorted ]
 }
-console.log(quickSort([7, 3, 1, 2, 8, 6, 4, 9, 5]));
+console.log(quickSort([7, 3, 1, 2, 8, 6, 4, 9, 5]))
