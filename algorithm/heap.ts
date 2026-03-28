@@ -1,98 +1,71 @@
-console.log("hi");
-type Comparator<T> = (a: T, b: T) => number;
+export class HeapByTs<T> {
+  constructor(
+    private compare: (a: T, b: T) => number,
+    private heap: T[] = [],
+  ) {}
 
-export class Heap<T> {
-  heap: T[] = [];
-  comparator: Comparator<T>;
-  constructor(comparator: Comparator<T>, arr : T[] = []) {
-    this.heap = arr
-    this.comparator = comparator;
-  }
-  swap(i: number, j: number): void {
-    [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
-  }
-  buildHeap():void{ // time complexity O(n)
-    const n = this.heap.length
-    for (let i = Math.floor(n / 2) - 1; i >= 0 ; i--){
-      this.heapifyDown(i,n)
-    }
-  }
-  insert(value: T): void {
-    console.log("value", value);
+  insert(value: T) {
     this.heap.push(value);
     this.heapifyUp();
-    console.log(this.heap);
   }
-  pop(n:number): T | undefined {
+
+  pop(): T | undefined {
+    const n = this.heap.length;
     const end = n - 1
     this.swap(0, end);
-    const res = this.heap.pop()!;
-    this.heapifyDown(end,n);
-    return res;
+    const removed = this.heap.pop();
+    this.heapifyDown(0, end);
+    return removed;
   }
 
   heapifyUp() {
-    let idx = this.heap.length - 1;
-
-    while (idx > 0) {
-      const parentIdx = Math.floor((idx - 1) / 2);
-      if (this.comparator(this.heap[parentIdx], this.heap[idx]) < 0) break;
-      this.swap(parentIdx, idx);
-      idx = parentIdx;
+    let idx = this.heap.length - 1
+    while(idx > 0){
+      const parentIdx = Math.floor((idx - 1) / 2)
+      if (this.compare(this.heap[parentIdx],this.heap[idx]) < 0 ) break;
+      this.swap(parentIdx, idx)
+      idx = parentIdx
     }
   }
-  heapifyDown(i: number, n: number): void {
-    while (2 * i + 1 > 0 && 2 * i + 1 < n) {
-      let leftChild: number = 2 * i + 1;
-      let rightChild: number = 2 * i + 2;
-      let smallestChildIdx = leftChild;
+  heapifyDown(start: number, end: number) {
+    while (2 * start + 1 < end) {
+      let left_c = 2 * start + 1;
+      let right_c = 2 * start + 2;
+      let target = left_c;
       if (
-        rightChild < n &&
-        this.comparator(this.heap[rightChild], this.heap[leftChild]) < 0
+        right_c < end &&
+        this.compare(this.heap[right_c], this.heap[left_c]) < 0//right node always bigger thatn left node 
       ) {
-        smallestChildIdx = rightChild;
+        target = right_c;
       }
-      if (this.comparator(this.heap[i], this.heap[smallestChildIdx]) < 0) break;
-      this.swap(i, smallestChildIdx);
-      i = smallestChildIdx;
+      if (this.compare(this.heap[start], this.heap[target]) < 0) break;
+      this.swap(start, target);
+      start = target;
     }
   }
-  sort():T[]{
-    const n = this.heap.length - 1
-    this.buildHeap()
-    for(let end = n - 1;end > 0; end--){
-      this.swap(0, end)
-      this.heapifyDown(0 ,end)
+  heapBuild() {
+    for(let i = Math.floor((this.heap.length - 1)/ 2); i >= 0; --i){
+      this.heapifyDown(i,this.heap.length)
     }
-    return this.heap
+  }
+  heapSort() {
+    const n = this.heap.length 
+    this.heapBuild()
+    for(let end = n - 1; end > 0; end-- ){
+       this.swap(0, end);
+      this.heapifyDown(0, end);
+    }
+  }
+  swap(i: number, j: number) {
+    [this.heap[i],this.heap[j]]=[this.heap[j],this.heap[i]]
   }
 }
 
-const minHeap = new Heap<number>((a, b) => a - b); 
-minHeap.insert(10);
-minHeap.insert(9);
-minHeap.insert(18);
-minHeap.insert(1);
+const minHeap = new HeapByTs<number>((a, b) => a - b)
+minHeap.insert(1)
+minHeap.insert(2)
+minHeap.insert(3)
+minHeap.insert(4)
 
-const maxHeap = new Heap<number>((a, b) => b - a);
-maxHeap.insert(10);
-maxHeap.insert(9);
-maxHeap.insert(18);
-maxHeap.insert(1);
-console.log(maxHeap);
-
-const PQ = new Heap<number>((a, b) => b - a, [1, 2, 9, 9]);
-const res = []
-while( PQ.heap.length > 0){
-  const el = PQ.heap.pop()
-  res.push(el)
-}
-console.log(res)
-
-// why Time complexity is n log n
-// insert (n times) * heapify up and down (log n) 
-
-// 2^h <= n <= 2^(h + 1)
-// h <= log n <= h + 1fhrh
-
-// h = log n
+console.log(minHeap.pop());
+console.log(minHeap)
